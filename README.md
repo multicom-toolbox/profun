@@ -40,7 +40,7 @@ wget ftp://ftp.uniprot.org/pub/databases/uniprot/knowledgebase/uniprot_sprot.dat
 gzip -d uniprot_sprot.dat.gz
 gzip -d uniprot_sprot.fasta.gz
 
-../blast-2.2.26/bin/formatdb  -p T -i uniprot_sprot.fasta
+../../programs/blast-2.2.26/bin/formatdb  -p T -i uniprot_sprot.fasta
 
 ```
 
