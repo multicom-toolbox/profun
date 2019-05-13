@@ -6,15 +6,9 @@
 #
 #Author: ZHENG WANG, June 10th, 2008.
 ###########################################################
-
+my $GLOBAL_PATH='/storage/htc/bdm/jh7x3/profun_github/profun/';
 use strict;
-
-
-use lib "/rose/space1/CAFA2016/CAFA_website_2016/script/MIME-Lite-2.117/lib/";
-use email;
-
 use Cwd;
-use MIME::Lite;
 if(@ARGV != 8){
 	die "Need 6 parameters: the path and file name of the sequence file containing all query sequences, the path of the psiblast executable program, the path of the directory where the single sequences are stored, the output folder path where the psiblast results are stored, the path of the database fasta file, the .dat database file for swissprot, and the LOG file path, and the original fasta file for the database;";
 }
@@ -32,8 +26,8 @@ my $start_time = time();
 
 
 #######(1) Read the overal sequence file and seperate it into many single sequence files########### 
-open(SEQALL, "<$seq_file_all");
-open(LOG, ">$log_file");
+open(SEQALL, "<$seq_file_all") or die "Failed to open file $seq_file_all";
+open(LOG, ">$log_file") or die "Failed to open file $log_file";
 ##############Read db into array#######
 print LOG "Reading the database into memory...\n";
 open(DB, "<$db_content_dir");
@@ -74,14 +68,14 @@ while(<SEQALL>){
 			}
 			############run psiblast on the query single sequence on the database##########
 			my $psi_blast_command = "$psi_blast_exe -i $single_seq_path -d $db_blast_dir -j 3 >$output_dir"."/"."$id".".out";	
-			print $psi_blast_command."\n";
+			#print $psi_blast_command."\n";
 			print LOG "PSI-BLAST ".$psi_blast_command."\n";
 			system("$psi_blast_command");
 
 			############parse the psiblast results#########################################
 		        my $list_file = "$output_dir"."/"."$id".".list";
-			my $parse_psiblast_command = "perl /rose/space1/CAFA2016/CAFA_website_2016/swissprot_psiblast/parse_blast_result.pl $output_dir"."/"."$id".".out"." $list_file";
-			print $parse_psiblast_command."\n";
+			my $parse_psiblast_command = "perl $GLOBAL_PATH/scripts/parse_blast_result.pl $output_dir"."/"."$id".".out"." $list_file";
+			#print $parse_psiblast_command."\n";
 			print LOG "PARSE ".$parse_psiblast_command."\n";
 			system("$parse_psiblast_command");
 
@@ -198,7 +192,7 @@ system("$psi_blast_command");
 
 ############parse the psiblast results#########################################
 my $list_file = "$output_dir"."/"."$id".".list";
-my $parse_psiblast_command = "perl /rose/space1/CAFA2016/CAFA_website_2016/swissprot_psiblast/parse_blast_result.pl $output_dir"."/"."$id".".out"." $list_file";
+my $parse_psiblast_command = "perl $GLOBAL_PATH/scripts/parse_blast_result.pl $output_dir"."/"."$id".".out"." $list_file";
 print $parse_psiblast_command."\n";
 print LOG "PARSE ".$parse_psiblast_command."\n";
 system("$parse_psiblast_command");
@@ -256,32 +250,5 @@ close(SEQALL);
 close(LOG);
 print "Done!\n";
 #######OVER (1)#############
-
-my $finish_time = time();
-my $Blast_diff_hrs = ($finish_time -$start_time)/3600;
-print "Blast finish! Total time: <$Blast_diff_hrs> hrs!\n"; 
-
-my $from = "CAFA-Profunc <jh7x3\@mail.missouri.edu>";
-my $to = "jh7x3\@mail.missouri.edu";
-my $smtp = "localhost";
-my $subject = "!! Blast finished";
-my $body = "Attention: Blast finish! \nInput file: $seq_file_all \nThe output directory is : $output_dir. \nTotal running time: <$Blast_diff_hrs> hrs!";
-####################
-	my $subject1 = $subject." 1";
-    my $msg1 = MIME::Lite->new(
-    		From    => "$from",
-    		To      => "$to",
-    		Subject => "$subject1",
-    		Cc     => 'miq44@mail.missouri.edu',
-    		Type    => 'multipart/mixed'
-    ) or die ("cannot create MIME object!");
-
-    $msg1->attach(
-        Type     =>'TEXT',
-        Data     =>"$body"
-	); 
-
-    $msg1->send or print "Error sending email, MIME::Lite->send failed: $!\n";
-####################
 
 

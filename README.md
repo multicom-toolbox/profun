@@ -33,11 +33,11 @@ tar -zxvf blast-2.2.26-x64-linux.tar.gz
 ```
 mkdir database
 cd database
-mkdir swiss_prot
-cd swiss_prot
-wget ftp://ftp.uniprot.org/pub/databases/uniprot/knowledgebase/uniprot_sprot.fasta.gz
+
 wget ftp://ftp.uniprot.org/pub/databases/uniprot/knowledgebase/uniprot_sprot.dat.gz
 gzip -d uniprot_sprot.dat.gz
+
+wget ftp://ftp.uniprot.org/pub/databases/uniprot/knowledgebase/uniprot_sprot.fasta.gz
 gzip -d uniprot_sprot.fasta.gz
 
 ../../programs/blast-2.2.26/bin/formatdb  -p T -i uniprot_sprot.fasta
@@ -47,11 +47,11 @@ gzip -d uniprot_sprot.fasta.gz
 **(D) Test**
 ```
 (1) Run blast
-mkdir -p ./test/2SN3-A/sequence ./test/2SN3-A/Blast_output
-perl scripts/blast_search_swiss_prot.pl ./test/2SN3-A.fasta  programs/blast-2.2.26/bin/blastpgp ?/test/2SN3-A/sequence /test/2SN3-A/Blast_output ./database/uniprot_sprot/uniprot_sprot.fasta ./database/uniprot_sprot/uniprot_sprot.dat /test/2SN3-A/LOG/BLAST.LOG ./database/uniprot_sprot/uniprot_sprot.fasta   
+mkdir -p ./test/2SN3-A/sequence ./test/2SN3-A/Blast_output ./test/2SN3-A/LOG/
+perl scripts/blast_search_swiss_prot.pl ./test/2SN3-A.fasta  programs/blast-2.2.26/bin/blastpgp ./test/2SN3-A/sequence ./test/2SN3-A/Blast_output ./database/uniprot_sprot.fasta ./database/uniprot_sprot.dat ./test/2SN3-A/LOG/BLAST.LOG ./database/uniprot_sprot.fasta   
 
 (2) Run prediction
 mkdir ./test/2SN3-A/pred
-perl bin/R_all_three_methods.pl ./scripts/ database/ ./test/2SN3-A/sequence ./test/2SN3-A/Blast_output ./test/2SN3-A/pred 
+perl bin/R_all_three_methods.pl ./scripts/ ./database/ ./test/2SN3-A/sequence ./test/2SN3-A/Blast_output ./test/2SN3-A/pred 
 
 ```
