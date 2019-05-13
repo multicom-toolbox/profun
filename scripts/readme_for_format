@@ -1,0 +1,7 @@
+The output format is :
+Format is :
+Column 1: proteinID
+Column 2: evalue and target name , such as 1e-10|T01234
+Column 3: network type mapped, could map to multi networks(Use ; to divide) , such as 562;3_contact_NORMAL_B_gene;4932
+Column 4: mapped protein/geneID in the network, could have multiID in multi-networks( use ; to divide different network, use | to divide the different mapped protein/gene). Such as P0CY12|P0CY10;Q9VR90|Q9VHG6|Q24297;C6TP87      . I checked, none mapped to multiIDs, so it's like P0CY12;Q8VSEE; ..
+Column 5: protein/gene neighbours in the network, could be in multi networks(use | to divide different network, use _ to divide different neighbours), such as P0CHD2_BKJSDF12|P0CY10_Q9VR90_Q9VHG6 . 

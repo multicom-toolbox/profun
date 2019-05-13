@@ -1,0 +1,3 @@
+First, we need to get the gene-gene interaction networks. This already done,
+just check this for different contact threshold:
+/exports/store1/rcrg4/special_project/result
