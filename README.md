@@ -23,8 +23,8 @@ cd profun
 **(B) Download programs**
 ```
 cd programs
-http://mirrors.vbi.vt.edu/mirrors/ftp.ncbi.nih.gov/blast/executables/blast%2B/2.2.26/ncbi-blast-2.2.26%2B-x64-linux.tar.gz
-tar -zxvf ncbi-blast-2.2.26%2B-x64-linux.tar.gz
+wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/legacy.NOTSUPPORTED/2.2.26/blast-2.2.26-x64-linux.tar.gz
+tar -zxvf blast-2.2.26-x64-linux.tar.gz
 
 ```
 
