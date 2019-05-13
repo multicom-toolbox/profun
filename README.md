@@ -47,7 +47,7 @@ gzip -d uniprot_sprot.fasta.gz
 **(D) Test**
 ```
 (1) Run blast
-mkdir -p /test/2SN3-A/sequence /test/2SN3-A/Blast_output
+mkdir -p ./test/2SN3-A/sequence ./test/2SN3-A/Blast_output
 perl scripts/blast_search_swiss_prot.pl ./test/2SN3-A.fasta  programs/blast-2.2.26/bin/blastpgp ?/test/2SN3-A/sequence /test/2SN3-A/Blast_output ./database/uniprot_sprot/uniprot_sprot.fasta ./database/uniprot_sprot/uniprot_sprot.dat /test/2SN3-A/LOG/BLAST.LOG ./database/uniprot_sprot/uniprot_sprot.fasta   
 
 (2) Run prediction
